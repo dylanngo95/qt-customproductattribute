@@ -4,17 +4,21 @@ declare(strict_types=1);
 
 namespace QT\CustomProductAttribute\Setup\Patch\Data;
 
+use Magento\Catalog\Model\Attribute\Backend\Startdate;
 use Magento\Catalog\Setup\CategorySetup;
 use Magento\Catalog\Setup\CategorySetupFactory;
+use Magento\Eav\Model\Entity\Attribute\Backend\Datetime;
+use Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Framework\Setup\Patch\PatchVersionInterface;
 
+
 /**
- * Class UpdateProductAttributes
+ * Class UpdateProductAttributesPatch
  * @package QT\CustomProductAttribute\Setup\Patch\Data
  */
-class UpdateProductAttributes implements DataPatchInterface, PatchVersionInterface
+class UpdateProductAttributesPatch implements DataPatchInterface, PatchVersionInterface
 {
     /**
      * @var ModuleDataSetupInterface
@@ -54,10 +58,10 @@ class UpdateProductAttributes implements DataPatchInterface, PatchVersionInterfa
 
         $categorySetup->addAttribute(
             \Magento\Catalog\Model\Product::ENTITY,
-            'other_name',
+            'sale_status',
             [
                 'type' => 'varchar',
-                'label' => 'Other Name',
+                'label' => 'Sale Status',
                 'input' => 'text',
                 'required' => false,
                 'unique' => false,
@@ -67,8 +71,9 @@ class UpdateProductAttributes implements DataPatchInterface, PatchVersionInterfa
                 'is_used_in_grid' => false,
                 'is_visible_in_grid' => false,
                 'is_filterable_in_grid' => false,
-                'searchable' => false,
                 'filterable' => false,
+                'searchable' => false,
+                'visible_in_advanced_search' => false,
                 'comparable' => false,
                 'visible_on_front' => false,
                 'visible' => true,
@@ -81,331 +86,67 @@ class UpdateProductAttributes implements DataPatchInterface, PatchVersionInterfa
 
         $categorySetup->addAttribute(
             \Magento\Catalog\Model\Product::ENTITY,
-            'parent_sku',
+            'provider',
             [
                 'type' => 'varchar',
-                'label' => 'Parent SKU',
+                'label' => 'Provider',
                 'input' => 'text',
                 'required' => false,
                 'unique' => false,
                 'sort_order' => 100,
                 'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
                 'group' => 'Product Details',
+                'is_used_in_grid' => false,
+                'is_visible_in_grid' => false,
+                'is_filterable_in_grid' => false,
+                'filterable' => false,
+                'comparable' => false,
+                'visible_on_front' => false,
+                'visible' => true,
+                'searchable' => false,
+                'visible_in_advanced_search' => false,
+                'used_in_product_listing' => false,
+                'apply_to' => '',
+                'backend' => '',
+                'frontend' => ''
+            ]
+        );
+
+        $categorySetup->addAttribute(
+            \Magento\Catalog\Model\Product::ENTITY,
+            'expired_date',
+            [
+                'type' => 'datetime',
+                'label' => 'Expired Date',
+                'input' => 'date',
+                'required' => false,
+                'unique' => false,
+                'sort_order' => 100,
+                'backend' => Datetime::class,
+                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
+                'used_in_product_listing' => true,
+                'apply_to' => '',
+                'group' => 'Product Details',
+                'filterable' => false,
+                'comparable' => false,
                 'is_used_in_grid' => true,
-                'is_visible_in_grid' => true,
-                'is_filterable_in_grid' => true,
-                'searchable' => false,
-                'filterable' => false,
-                'comparable' => false,
-                'visible_on_front' => false,
-                'visible' => true,
-                'used_in_product_listing' => false,
-                'apply_to' => '',
-                'backend' => '',
-                'frontend' => ''
-            ]
-        );
-
-        $categorySetup->addAttribute(
-            \Magento\Catalog\Model\Product::ENTITY,
-            'brand',
-            [
-                'type' => 'varchar',
-                'label' => 'Brand',
-                'input' => 'text',
-                'required' => false,
-                'unique' => false,
-                'sort_order' => 100,
-                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
-                'group' => 'Product Details',
-                'is_used_in_grid' => true,
-                'is_visible_in_grid' => true,
-                'is_filterable_in_grid' => true,
-                'filterable' => false,
-                'comparable' => false,
-                'visible_on_front' => true,
-                'visible' => true,
-                'searchable' => false,
-                'used_in_product_listing' => false,
-                'visible_in_advanced_search' => false,
-                'apply_to' => '',
-                'backend' => '',
-                'frontend' => ''
-            ]
-        );
-
-        $categorySetup->addAttribute(
-            \Magento\Catalog\Model\Product::ENTITY,
-            'trademark',
-            [
-                'type' => 'varchar',
-                'label' => 'Trademark',
-                'input' => 'text',
-                'required' => false,
-                'unique' => false,
-                'sort_order' => 100,
-                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
-                'group' => 'Product Details',
-                'is_used_in_grid' => true,
-                'is_visible_in_grid' => true,
-                'is_filterable_in_grid' => true,
-                'filterable' => false,
-                'comparable' => false,
-                'visible_on_front' => true,
-                'visible' => true,
-                'searchable' => false,
-                'used_in_product_listing' => false,
-                'visible_in_advanced_search' => false,
-                'apply_to' => '',
-                'backend' => '',
-                'frontend' => ''
-            ]
-        );
-
-        $categorySetup->addAttribute(
-            \Magento\Catalog\Model\Product::ENTITY,
-            'barcode',
-            [
-                'type' => 'varchar',
-                'label' => 'Barcode',
-                'input' => 'text',
-                'required' => false,
-                'unique' => false,
-                'sort_order' => 100,
-                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
-                'group' => 'Product Details',
-                'is_used_in_grid' => false,
                 'is_visible_in_grid' => false,
                 'is_filterable_in_grid' => false,
-                'filterable' => false,
-                'comparable' => false,
-                'visible_on_front' => false,
-                'visible' => true,
-                'searchable' => false,
-                'visible_in_advanced_search' => false,
-                'used_in_product_listing' => false,
-                'apply_to' => '',
-                'backend' => '',
-                'frontend' => ''
             ]
         );
 
         $categorySetup->addAttribute(
             \Magento\Catalog\Model\Product::ENTITY,
-            'wholesale_price',
-            [
-                'type' => 'decimal',
-                'label' => 'Wholesale Price',
-                'input' => 'price',
-                'required' => false,
-                'unique' => false,
-                'sort_order' => 100,
-                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
-                'group' => 'Product Details',
-                'is_used_in_grid' => false,
-                'is_visible_in_grid' => false,
-                'is_filterable_in_grid' => false,
-                'filterable' => false,
-                'comparable' => false,
-                'visible_on_front' => false,
-                'visible' => true,
-                'searchable' => false,
-                'visible_in_advanced_search' => false,
-                'used_in_product_listing' => false,
-                'apply_to' => '',
-                'backend' => '',
-                'frontend' => ''
-            ]
-        );
-
-        $categorySetup->addAttribute(
-            \Magento\Catalog\Model\Product::ENTITY,
-            'old_price',
-            [
-                'type' => 'decimal',
-                'label' => 'Old Price',
-                'input' => 'price',
-                'required' => false,
-                'unique' => false,
-                'sort_order' => 100,
-                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
-                'group' => 'Product Details',
-                'is_used_in_grid' => false,
-                'is_visible_in_grid' => false,
-                'is_filterable_in_grid' => false,
-                'filterable' => false,
-                'comparable' => false,
-                'visible_on_front' => false,
-                'visible' => true,
-                'searchable' => false,
-                'visible_in_advanced_search' => false,
-                'used_in_product_listing' => false,
-                'apply_to' => '',
-                'backend' => '',
-                'frontend' => ''
-            ]
-        );
-
-        $categorySetup->addAttribute(
-            \Magento\Catalog\Model\Product::ENTITY,
-            'unit',
-            [
-                'type' => 'varchar',
-                'label' => 'Unit',
-                'input' => 'text',
-                'required' => false,
-                'unique' => false,
-                'sort_order' => 100,
-                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
-                'group' => 'Product Details',
-                'is_used_in_grid' => false,
-                'is_visible_in_grid' => false,
-                'is_filterable_in_grid' => false,
-                'filterable' => false,
-                'comparable' => false,
-                'visible_on_front' => false,
-                'visible' => true,
-                'searchable' => false,
-                'visible_in_advanced_search' => false,
-                'used_in_product_listing' => false,
-                'apply_to' => '',
-                'backend' => '',
-                'frontend' => ''
-            ]
-        );
-
-        $categorySetup->addAttribute(
-            \Magento\Catalog\Model\Product::ENTITY,
-            'vat',
-            [
-                'type' => 'decimal',
-                'label' => 'Vat',
-                'input' => 'price',
-                'required' => false,
-                'unique' => false,
-                'sort_order' => 100,
-                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
-                'group' => 'Product Details',
-                'is_used_in_grid' => false,
-                'is_visible_in_grid' => false,
-                'is_filterable_in_grid' => false,
-                'filterable' => false,
-                'comparable' => false,
-                'visible_on_front' => false,
-                'visible' => true,
-                'searchable' => false,
-                'visible_in_advanced_search' => false,
-                'used_in_product_listing' => false,
-                'apply_to' => '',
-                'backend' => '',
-                'frontend' => ''
-            ]
-        );
-
-        // Guarantee Group
-        $categorySetup->addAttributeGroup(
-            \Magento\Catalog\Model\Product::ENTITY,
-            $attributeSetId,
-            'Guarantee',
-            20
-        );
-
-        $categorySetup->addAttribute(
-            \Magento\Catalog\Model\Product::ENTITY,
-            'origin',
-            [
-                'type' => 'varchar',
-                'label' => 'Origin',
-                'input' => 'text',
-                'required' => false,
-                'unique' => false,
-                'sort_order' => 100,
-                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
-                'group' => 'Guarantee',
-                'is_used_in_grid' => false,
-                'is_visible_in_grid' => false,
-                'is_filterable_in_grid' => false,
-                'filterable' => false,
-                'comparable' => false,
-                'visible_on_front' => false,
-                'visible' => true,
-                'searchable' => false,
-                'visible_in_advanced_search' => false,
-                'used_in_product_listing' => false,
-                'apply_to' => '',
-                'backend' => '',
-                'frontend' => ''
-            ]
-        );
-
-        $categorySetup->addAttribute(
-            \Magento\Catalog\Model\Product::ENTITY,
-            'warranty_address',
-            [
-                'type' => 'varchar',
-                'label' => 'Warranty Address',
-                'input' => 'text',
-                'required' => false,
-                'unique' => false,
-                'sort_order' => 100,
-                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
-                'group' => 'Guarantee',
-                'is_used_in_grid' => false,
-                'is_visible_in_grid' => false,
-                'is_filterable_in_grid' => false,
-                'filterable' => false,
-                'comparable' => false,
-                'visible_on_front' => false,
-                'visible' => true,
-                'searchable' => false,
-                'visible_in_advanced_search' => false,
-                'used_in_product_listing' => false,
-                'apply_to' => '',
-                'backend' => '',
-                'frontend' => ''
-            ]
-        );
-
-        $categorySetup->addAttribute(
-            \Magento\Catalog\Model\Product::ENTITY,
-            'warranty_phone_number',
-            [
-                'type' => 'varchar',
-                'label' => 'Warranty Phone Number',
-                'input' => 'text',
-                'required' => false,
-                'unique' => false,
-                'sort_order' => 100,
-                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
-                'group' => 'Guarantee',
-                'is_used_in_grid' => false,
-                'is_visible_in_grid' => false,
-                'is_filterable_in_grid' => false,
-                'filterable' => false,
-                'comparable' => false,
-                'visible_on_front' => false,
-                'visible' => true,
-                'searchable' => false,
-                'visible_in_advanced_search' => false,
-                'used_in_product_listing' => false,
-                'apply_to' => '',
-                'backend' => '',
-                'frontend' => ''
-            ]
-        );
-
-        $categorySetup->addAttribute(
-            \Magento\Catalog\Model\Product::ENTITY,
-            'remaining_warranty_month',
+            'product_level',
             [
                 'type' => 'int',
-                'label' => 'Remaining Warranty Month',
+                'label' => 'Product Level',
                 'input' => 'text',
                 'required' => false,
                 'unique' => false,
                 'sort_order' => 100,
                 'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
-                'group' => 'Guarantee',
+                'group' => 'Product Details',
                 'is_used_in_grid' => false,
                 'is_visible_in_grid' => false,
                 'is_filterable_in_grid' => false,
@@ -424,10 +165,122 @@ class UpdateProductAttributes implements DataPatchInterface, PatchVersionInterfa
 
         $categorySetup->addAttribute(
             \Magento\Catalog\Model\Product::ENTITY,
-            'warranty_comment',
+            'seo_keyword',
             [
                 'type' => 'varchar',
-                'label' => 'Warranty Comment',
+                'label' => 'SEO Keyword',
+                'input' => 'text',
+                'required' => false,
+                'unique' => false,
+                'sort_order' => 100,
+                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
+                'group' => 'Product Details',
+                'is_used_in_grid' => false,
+                'is_visible_in_grid' => false,
+                'is_filterable_in_grid' => false,
+                'filterable' => false,
+                'comparable' => false,
+                'visible_on_front' => false,
+                'visible' => true,
+                'searchable' => false,
+                'visible_in_advanced_search' => false,
+                'used_in_product_listing' => false,
+                'apply_to' => '',
+                'backend' => '',
+                'frontend' => ''
+            ]
+        );
+
+        $categorySetup->addAttribute(
+            \Magento\Catalog\Model\Product::ENTITY,
+            'product_position',
+            [
+                'type' => 'varchar',
+                'label' => 'Product Position',
+                'input' => 'text',
+                'required' => false,
+                'unique' => false,
+                'sort_order' => 100,
+                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
+                'group' => 'Product Details',
+                'is_used_in_grid' => false,
+                'is_visible_in_grid' => false,
+                'is_filterable_in_grid' => false,
+                'filterable' => false,
+                'comparable' => false,
+                'visible_on_front' => false,
+                'visible' => true,
+                'searchable' => false,
+                'visible_in_advanced_search' => false,
+                'used_in_product_listing' => false,
+                'apply_to' => '',
+                'backend' => '',
+                'frontend' => ''
+            ]
+        );
+
+        $categorySetup->addAttribute(
+            \Magento\Catalog\Model\Product::ENTITY,
+            'internal_category',
+            [
+                'type' => 'varchar',
+                'label' => 'Internal Category',
+                'input' => 'text',
+                'required' => false,
+                'unique' => false,
+                'sort_order' => 100,
+                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
+                'group' => 'Product Details',
+                'is_used_in_grid' => false,
+                'is_visible_in_grid' => false,
+                'is_filterable_in_grid' => false,
+                'filterable' => false,
+                'comparable' => false,
+                'visible_on_front' => false,
+                'visible' => false,
+                'searchable' => false,
+                'visible_in_advanced_search' => false,
+                'used_in_product_listing' => false,
+                'apply_to' => '',
+                'backend' => '',
+                'frontend' => ''
+            ]
+        );
+
+        $categorySetup->addAttribute(
+            \Magento\Catalog\Model\Product::ENTITY,
+            'import_price',
+            [
+                'type' => 'decimal',
+                'label' => 'Import Price',
+                'input' => 'text',
+                'required' => false,
+                'unique' => false,
+                'sort_order' => 100,
+                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
+                'group' => 'Product Details',
+                'is_used_in_grid' => false,
+                'is_visible_in_grid' => false,
+                'is_filterable_in_grid' => false,
+                'filterable' => false,
+                'comparable' => false,
+                'visible_on_front' => false,
+                'visible' => true,
+                'searchable' => false,
+                'visible_in_advanced_search' => false,
+                'used_in_product_listing' => false,
+                'apply_to' => '',
+                'backend' => '',
+                'frontend' => ''
+            ]
+        );
+
+        $categorySetup->addAttribute(
+            \Magento\Catalog\Model\Product::ENTITY,
+            'size',
+            [
+                'type' => 'varchar',
+                'label' => 'Size',
                 'input' => 'text',
                 'required' => false,
                 'unique' => false,
