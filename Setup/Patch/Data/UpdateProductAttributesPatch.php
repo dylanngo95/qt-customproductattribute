@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace QT\CustomProductAttribute\Setup\Patch\Data;
 
-use Magento\Catalog\Model\Attribute\Backend\Startdate;
 use Magento\Catalog\Setup\CategorySetup;
 use Magento\Catalog\Setup\CategorySetupFactory;
 use Magento\Eav\Model\Entity\Attribute\Backend\Datetime;
-use Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Framework\Setup\Patch\PatchVersionInterface;
